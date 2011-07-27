@@ -21,5 +21,17 @@
 	    <hours>3</hours>
 	    <minutes>5</minutes>
 	</elapsed>
-	</task>
+     </task>
+     <task>
+	<title>Song practice</title>
+	<length>
+	    <hours>3</hours>
+	    <minutes>5</minutes>
+	</length>
+	<elapsed>
+	    <hours>3</hours>
+	    <minutes>5</minutes>
+	</elapsed>
+     </task>
+
 </session>

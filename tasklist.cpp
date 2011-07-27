@@ -86,5 +86,5 @@ QVariant TaskList::data ( const QModelIndex & index, int role) const
 
 int TaskList::rowCount (const QModelIndex & parent) const
 {
-    return 2;
+    return _taskList.length();
 }
