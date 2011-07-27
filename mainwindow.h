@@ -1,7 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QtCore>
 #include <QtGui>
+#include "tasklist.h"
+
 
 class MainWindow : public QMainWindow
 {
@@ -13,6 +16,7 @@ public:
 
 private:
     QListView *sessionView;
+    TaskList *tasks;
 };
 
 #endif // MAINWINDOW_H

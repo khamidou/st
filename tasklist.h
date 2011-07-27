@@ -2,10 +2,11 @@
 #define TASKLIST_H
 
 #include <QtCore>
+#include <QtGui>
 #include <QtXml>
 #include <QAbstractListModel>
 
-class Task
+class Task : public QObject
 {
     /** this class models a task, which is a portion of a session */
     Q_OBJECT
@@ -42,9 +43,11 @@ class TaskList : QAbstractListModel
 		</session>
  */
 
-public:
-    TaskList();
+QList <Task *> _taskList;
+public:    
     TaskList(QFile& f);
+    ~TaskList();
+
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     int rowCount (const QModelIndex & parent = QModelIndex() ) const;
 

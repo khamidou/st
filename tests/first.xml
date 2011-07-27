@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<session>
+    <task>
+	<title>Scale exercises</title>
+	<length>
+	    <hours>3</hours>
+	    <minutes>5</minutes>
+	</length>
+	<elapsed>
+	    <hours>3</hours>
+	    <minutes>5</minutes>
+	</elapsed>
+    </task>
+    <task>
+	<title>Rhythm practice</title>
+	<length>
+	    <hours>3</hours>
+	    <minutes>5</minutes>
+	</length>
+	<elapsed>
+	    <hours>3</hours>
+	    <minutes>5</minutes>
+	</elapsed>
+	</task>
+</session>
