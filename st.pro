@@ -8,8 +8,8 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     tasklist.cpp \
-    sessionlist.cpp
+    summarylist.cpp
 HEADERS += mainwindow.h \
     tasklist.h \
-    sessionlist.h
+    summarylist.h
 OTHER_FILES += README.txt

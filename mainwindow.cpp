@@ -3,13 +3,23 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    sessionView = new QListView();
+    summaryView = new QListView();
     taskView = new QListView();
+
+
+    /* FIXME: use setPlaceholderText when I'll have QT 4.7 */
+    QHBoxLayout *newListHBox = new QHBoxLayout();
+    newListField = new QLineEdit();
+    newListButton = new QPushButton("Create a new list");
+    newListHBox->addWidget(newListField);
+    newListHBox->addWidget(newListButton);
+
     QFrame *frame = new QFrame();
 
     QGridLayout *gridLayout = new QGridLayout();
-    gridLayout->addWidget(sessionView, 0, 0);
+    gridLayout->addWidget(summaryView, 0, 0);
     gridLayout->addWidget(taskView, 0, 1);
+    gridLayout->addLayout(newListHBox, 1, 0);
 
 
     QFile fd(tr("tests/first.xml"));    
@@ -19,17 +29,17 @@ MainWindow::MainWindow(QWidget *parent)
     QDir d(tr("./tests"));
 
     tasks = new TaskList(fd);
-    sList = new SessionList(d);
+    sList = new SummaryList(d);
 
-    sessionView->setModel((QAbstractItemModel *) sList);
+    summaryView->setModel((QAbstractItemModel *) sList);
     taskView->setModel((QAbstractItemModel *) tasks);
 
-    connect(sessionView, SIGNAL(clicked(QModelIndex)), this, SLOT(changeTaskList(QModelIndex)));
+    connect(summaryView, SIGNAL(clicked(QModelIndex)), this, SLOT(changeTaskList(QModelIndex)));
 
     frame->setLayout(gridLayout);
     setCentralWidget(frame);
-    setWindowTitle(tr("Session Tracker"));
-    resize(440, 350);
+    setWindowTitle(tr("A Faire"));
+    resize(640, 350);
 }
 
 MainWindow::~MainWindow()
@@ -39,7 +49,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::changeTaskList(const QModelIndex &index)
 {
-    QString filename = ((SessionList*) sessionView->model())->fileNameAt(index);
+    QString filename = ((SummaryList*) summaryView->model())->fileNameAt(index);
 
     QFile fd(filename);
     if(!fd.open(QIODevice::ReadOnly))
