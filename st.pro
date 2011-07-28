@@ -7,7 +7,9 @@ TARGET = st
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    tasklist.cpp
+    tasklist.cpp \
+    sessionlist.cpp
 HEADERS += mainwindow.h \
-    tasklist.h
+    tasklist.h \
+    sessionlist.h
 OTHER_FILES += README.txt

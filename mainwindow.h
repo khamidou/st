@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <QtGui>
+#include "sessionlist.h"
 #include "tasklist.h"
 
 
@@ -14,8 +15,13 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void changeTaskList(const QModelIndex & index);
+
 private:
     QListView *sessionView;
+    QListView *taskView;
+    SessionList *sList;
     TaskList *tasks;
 };
 

@@ -26,7 +26,6 @@ Task::Task(QDomElement &root)
     minute = minutes.text().toInt();
     _timeRemaining = QTime(hour, minute, 0);
 
-    qDebug() << minute << " " << hour;
 }
 
 TaskList::TaskList(QFile &f)
@@ -46,7 +45,9 @@ TaskList::TaskList(QFile &f)
 	return;
     }
 
+    _sessionName = doc.firstChildElement().attribute("name");
     QDomElement child = doc.firstChildElement("session").firstChildElement();
+
 
     if (child.isNull()) {
 	QMessageBox::critical(0, "Critical error !", "The Document doesn't have a root tag");
@@ -55,7 +56,6 @@ TaskList::TaskList(QFile &f)
 
     do {
 	Task *t = new Task(child);
-	qDebug() << child.tagName();
 	_taskList.append(t);
 	child = child.nextSiblingElement();
     } while(!child.isNull());

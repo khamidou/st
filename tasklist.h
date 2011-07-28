@@ -26,7 +26,7 @@ class TaskList : QAbstractListModel
 {
     /**	TaskList is our model class. It loads and saves tasks from an xml file.
 		Format of the xml file :
-		<session>
+		<session name="Work #1">
 		    <task>
 			<title>Task 1</title>
 			<length>
@@ -44,6 +44,8 @@ class TaskList : QAbstractListModel
  */
 
 QList <Task *> _taskList;
+QString _sessionName;
+
 public:    
     TaskList(QFile& f);
     ~TaskList();
@@ -51,6 +53,8 @@ public:
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     int rowCount (const QModelIndex & parent = QModelIndex() ) const;
 
+    /* accessors */
+    QString sessionName() { return _sessionName; };
 };
 
 #endif // TASKLIST_H
