@@ -9,23 +9,42 @@ Task::Task(QDomElement &root)
 
     _title = titleElement.text();
 
-    QDomElement length = titleElement.nextSiblingElement();
+    QDomElement length = titleElement.nextSiblingElement("length");
     QDomElement hours = length.firstChildElement("hours");
 
     int hour = hours.text().toInt();
 
-    QDomElement minutes = hours.nextSiblingElement();
+    QDomElement minutes = hours.nextSiblingElement("minutes");
     int minute = minutes.text().toInt();
 
     _taskLength = QTime(hour, minute, 0);
 
-    QDomElement remaining = length.nextSiblingElement();
+    QDomElement remaining = length.nextSiblingElement("remaining");
     hours = remaining.firstChildElement("hours");
     hour = hours.text().toInt();
-    minutes = hours.nextSiblingElement();
+    minutes = hours.nextSiblingElement("minutes");
     minute = minutes.text().toInt();
     _timeRemaining = QTime(hour, minute, 0);
 
+}
+
+TaskList::TaskList(QString listName)
+{
+	QDomDocument doc;
+	QDomElement root = doc.createElement("todolist");
+	doc.appendChild(root);
+	root.setAttribute("name", listName);
+
+	QFile file("./tests/" + listName + ".xml");	
+	if(!file.open(QIODevice::WriteOnly | QFile::Truncate)) {
+	    QMessageBox::critical(0,	tr("Unable to create Todo List"),
+							tr("An error happened while creating the list file : ") + file.errorString());
+	    return;
+	}
+
+	QTextStream stream(&file);
+	doc.save(stream, 4);
+	stream.flush();
 }
 
 TaskList::TaskList(QFile &f)
@@ -45,20 +64,19 @@ TaskList::TaskList(QFile &f)
 	return;
     }
 
-    _sessionName = doc.firstChildElement().attribute("name");
-    QDomElement child = doc.firstChildElement("session").firstChildElement();
+    _todoListName = doc.firstChildElement("todolist").attribute("name");
+    QDomElement child = doc.firstChildElement("todolist").firstChildElement("task");
 
-
-    if (child.isNull()) {
+    if (doc.firstChildElement("todolist").isNull()) {
 	QMessageBox::critical(0, "Critical error !", "The Document doesn't have a root tag");
 	return;
     }
 
-    do {
+    while(!child.isNull()) {
 	Task *t = new Task(child);
 	_taskList.append(t);
-	child = child.nextSiblingElement();
-    } while(!child.isNull());
+	child = child.nextSiblingElement("task");
+    }
 
 }
 
@@ -87,4 +105,9 @@ QVariant TaskList::data ( const QModelIndex & index, int role) const
 int TaskList::rowCount (const QModelIndex & parent) const
 {
     return _taskList.length();
+}
+
+int TaskList::columnCount( const QModelIndex & parent = QModelIndex() ) const
+{
+    return 1;
 }

@@ -17,6 +17,7 @@ public:
 
 public slots:
     void changeTaskList(const QModelIndex & index);
+    void createNewList(void);
 
 private:
     QListView *summaryView;

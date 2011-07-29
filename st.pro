@@ -8,8 +8,10 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     tasklist.cpp \
-    summarylist.cpp
+    summarylist.cpp \
+    taskdelegate.cpp
 HEADERS += mainwindow.h \
     tasklist.h \
-    summarylist.h
+    summarylist.h \
+    taskdelegate.h
 OTHER_FILES += README.txt

@@ -6,27 +6,30 @@
 #include <QtXml>
 #include <QAbstractListModel>
 
-class Task : public QObject
+class Task //: public QObject
 {
     /** this class models a task, which is a portion of a session */
-    Q_OBJECT
+//    Q_OBJECT
     QString _title;
     QTime _taskLength;
     QTime _timeRemaining;
 
 public:
+    Task() : _title("Unnamed task"), _taskLength(), _timeRemaining() { };
     Task(QString title, QTime taskLength) : _title(title), _taskLength(taskLength), _timeRemaining() { };
     Task(QDomElement& root);
     QString title(void) { return _title; };
     QTime taskLength(void) { return _taskLength; }
 
 };
+Q_DECLARE_METATYPE(Task)
 
-class TaskList : QAbstractListModel
+class TaskList : QAbstractItemModel
 {
+
     /**	TaskList is our model class. It loads and saves tasks from an xml file.
 		Format of the xml file :
-		<session name="Work #1">
+		<todolist name="Work #1">
 		    <task>
 			<title>Task 1</title>
 			<length>
@@ -40,21 +43,22 @@ class TaskList : QAbstractListModel
 		    </task>
 		    <task>
 			...
-		</session>
+		</todolist>
  */
 
 QList <Task *> _taskList;
-QString _sessionName;
+QString _todoListName;
 
 public:    
     TaskList(QFile& f);
+    TaskList(QString listName);
     ~TaskList();
 
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     int rowCount (const QModelIndex & parent = QModelIndex() ) const;
-
+    int columnCount( const QModelIndex & parent = QModelIndex() ) const;
+    QModelIndex parent ( const QModelIndex & index ) const { return QModelIndex(); };
     /* accessors */
-    QString sessionName() { return _sessionName; };
+    QString todoListName() { return _todoListName; };
 };
-
 #endif // TASKLIST_H

@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     taskView->setModel((QAbstractItemModel *) tasks);
 
     connect(summaryView, SIGNAL(clicked(QModelIndex)), this, SLOT(changeTaskList(QModelIndex)));
+    connect(newListButton, SIGNAL(clicked()), this, SLOT(createNewList()));
 
     frame->setLayout(gridLayout);
     setCentralWidget(frame);
@@ -60,4 +61,14 @@ void MainWindow::changeTaskList(const QModelIndex &index)
     taskView->setModel((QAbstractItemModel *) newModel);
     delete oldModel;
 
+}
+
+void MainWindow::createNewList()
+{
+    QString title = newListField->text();
+    if (title == "")
+	return;
+
+    SummaryList * model = (SummaryList *) summaryView->model();
+    model->createNewList(title);
 }

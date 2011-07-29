@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<session name="Work #1">
+<todolist name="Work #1">
     <task>
 	<title>Scale exercises</title>
 	<length>
@@ -34,4 +34,4 @@
 	</elapsed>
      </task>
 
-</session>
+</todolist>

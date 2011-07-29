@@ -18,6 +18,7 @@ public:
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     int rowCount (const QModelIndex & parent = QModelIndex() ) const;
     QString fileNameAt(const QModelIndex &index);
+    bool createNewList(QString listName);
 };
 
 #endif // SummaryList_H

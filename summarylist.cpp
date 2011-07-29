@@ -26,8 +26,8 @@ QVariant SummaryList::data ( const QModelIndex & index, int role) const
 	/* otherwise, open the file and get the session name */
 	TaskList t(f);
 
-	if(t.sessionName() != "")
-	    return t.sessionName();
+	if(t.todoListName() != "")
+	    return t.todoListName();
 	else
 	    return _directory.entryList().at(index.row());
     }
@@ -43,4 +43,11 @@ int SummaryList::rowCount (const QModelIndex & parent) const
 QString SummaryList::fileNameAt(const QModelIndex &index)
 {
     return _directory.absoluteFilePath(_directory.entryList().at(index.row()));
+}
+
+bool SummaryList::createNewList(QString listName)
+{    
+	TaskList l(listName);
+	emit QAbstractItemModel::dataChanged(index(0), index(rowCount()));
+	return true;
 }
